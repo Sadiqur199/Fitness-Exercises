@@ -1,11 +1,12 @@
-import { Box, Pagination, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import ExerciseCard from '../ExerciseCard/ExerciseCard';
-import Loader from '../Loader/Loader';
-import {exerciseOptions, fetchData} from '../../Utiliti/fetchData';
+import Pagination from '@mui/material/Pagination';
+import { Box, Stack, Typography } from '@mui/material';
 
+import { exerciseOptions, fetchData } from '../utils/fetchData';
+import ExerciseCard from './ExerciseCard';
+import Loader from './Loader';
 
-const Exercises = ({exercises , setExercises , bodyPart }) => {
+const Exercises = ({ exercises, setExercises, bodyPart }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [exercisesPerPage] = useState(6);
 
@@ -25,7 +26,7 @@ const Exercises = ({exercises , setExercises , bodyPart }) => {
     fetchExercisesData();
   }, [bodyPart]);
 
-
+  // Pagination
   const indexOfLastExercise = currentPage * exercisesPerPage;
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
   const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise);
@@ -37,8 +38,6 @@ const Exercises = ({exercises , setExercises , bodyPart }) => {
   };
 
   if (!currentExercises.length) return <Loader />;
-
-
 
   return (
     <Box id="exercises" sx={{ mt: { lg: '109px' } }} mt="50px" p="20px">
@@ -66,3 +65,4 @@ const Exercises = ({exercises , setExercises , bodyPart }) => {
 };
 
 export default Exercises;
+
