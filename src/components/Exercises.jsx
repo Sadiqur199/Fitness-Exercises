@@ -20,7 +20,6 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
         } else {
           exercisesData = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`, exerciseOptions);
         }
-
         // Log fetched data to verify format
         console.log('Fetched exercises data:', exercisesData);
 
