@@ -14,13 +14,20 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
     const fetchExercisesData = async () => {
       let exercisesData = [];
 
-      if (bodyPart === 'all') {
-        exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', exerciseOptions);
-      } else {
-        exercisesData = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`, exerciseOptions);
-      }
+      try {
+        if (bodyPart === 'all') {
+          exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', exerciseOptions);
+        } else {
+          exercisesData = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`, exerciseOptions);
+        }
 
-      setExercises(exercisesData);
+        // Log fetched data to verify format
+        console.log('Fetched exercises data:', exercisesData);
+
+        setExercises(exercisesData);
+      } catch (error) {
+        console.error('Error fetching exercises:', error);
+      }
     };
 
     fetchExercisesData();
@@ -29,7 +36,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
   // Pagination
   const indexOfLastExercise = currentPage * exercisesPerPage;
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
-  const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise);
+  const currentExercises = Array.isArray(exercises) ? exercises.slice(indexOfFirstExercise, indexOfLastExercise) : [];
 
   const paginate = (event, value) => {
     setCurrentPage(value);
@@ -65,4 +72,3 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
 };
 
 export default Exercises;
-
